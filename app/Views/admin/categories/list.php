@@ -33,7 +33,7 @@
                     <?php endif; ?>
                 </td>
                 <td>
-                    <a href="<?= site_url("admin/categories/{$category['id']}/edit") ?>" class="btn btn-sm btn-outline-primary" title="Edit">
+                    <a href="<?= site_url("admin/categories/edit/{$category['id']}") ?>" class="btn btn-sm btn-outline-primary" title="Edit">
                         <i class="bi bi-pencil"></i>
                     </a>
                     <form action="<?= site_url("admin/categories/{$category['id']}") ?>" method="post" class="d-inline">

@@ -32,7 +32,7 @@ class Categories extends BaseController
             'title' => 'Add New Document Category'
         ];
 
-        return view('admin/categories/form', $data);
+        return view('admin/categories/create', $data);
     }
 
     public function create()
@@ -71,7 +71,7 @@ class Categories extends BaseController
             'category' => $category
         ];
 
-        return view('admin/categories/form', $data);
+        return view('admin/categories/edit', $data);
     }
 
     public function update($id)

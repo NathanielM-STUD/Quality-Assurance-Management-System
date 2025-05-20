@@ -38,7 +38,7 @@ class Users extends BaseController
             'departments' => $departments
         ];
 
-        return view('admin/users/form', $data);
+        return view('admin/users/create', $data);
     }
 
     public function create()
@@ -48,9 +48,14 @@ class Users extends BaseController
             'email' => 'required|valid_email|is_unique[users.email]',
             'full_name' => 'required|max_length[100]',
             'password' => 'required|min_length[8]',
-            'role' => 'required|in_list[admin,representative]',
-            'department_id' => 'permit_empty|is_not_unique[departments.id]'
+            'role' => 'required|in_list[admin,representative]'
         ];
+
+        if ($this->request->getPost('role') === 'representative') {
+            $rules['department_id'] = 'required|is_not_unique[departments.id]';
+        } else {
+            $rules['department_id'] = 'permit_empty';
+        }
 
         if (!$this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
@@ -62,7 +67,7 @@ class Users extends BaseController
             'full_name' => $this->request->getPost('full_name'),
             'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             'role' => $this->request->getPost('role'),
-            'department_id' => $this->request->getPost('department_id')
+            'department_id' => $this->request->getPost('role') === 'representative' ? $this->request->getPost('department_id') : null
         ];
 
         $this->userModel->insert($data);
@@ -86,7 +91,7 @@ class Users extends BaseController
             'departments' => $departments
         ];
 
-        return view('admin/users/form', $data);
+        return view('admin/users/edit', $data);
     }
 
     public function update($id)
@@ -101,9 +106,15 @@ class Users extends BaseController
             'username' => "required|is_unique[users.username,id,$id]|max_length[50]",
             'email' => "required|valid_email|is_unique[users.email,id,$id]",
             'full_name' => 'required|max_length[100]',
-            'role' => 'required|in_list[admin,representative]',
-            'department_id' => 'permit_empty|is_not_unique[departments.id]'
+            'role' => 'required|in_list[admin,representative]'
         ];
+
+        // Add department validation if role is representative
+        if ($this->request->getPost('role') === 'representative') {
+            $rules['department_id'] = 'required|is_not_unique[departments.id]';
+        } else {
+            $rules['department_id'] = 'permit_empty';
+        }
 
         // Only validate password if it's provided
         if ($this->request->getPost('password')) {
@@ -119,7 +130,7 @@ class Users extends BaseController
             'email' => $this->request->getPost('email'),
             'full_name' => $this->request->getPost('full_name'),
             'role' => $this->request->getPost('role'),
-            'department_id' => $this->request->getPost('department_id')
+            'department_id' => $this->request->getPost('role') === 'representative' ? $this->request->getPost('department_id') : null
         ];
 
         // Update password only if provided
@@ -149,7 +160,6 @@ class Users extends BaseController
 
         return redirect()->to('/admin/users')->with('message', 'User deleted successfully');
     }
-
     public function resetPassword($id)
     {
         $user = $this->userModel->find($id);

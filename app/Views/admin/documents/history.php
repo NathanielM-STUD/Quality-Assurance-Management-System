@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Submission History</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="<?= site_url("admin/documents/view/{$submission['id']}") ?>" class="btn btn-sm btn-outline-secondary">
+        <a href="<?= base_url("admin/documents/view/{$submission['id']}") ?>" class="btn btn-sm btn-outline-secondary">
             <i class="bi bi-arrow-left"></i> Back to Submission
         </a>
     </div>

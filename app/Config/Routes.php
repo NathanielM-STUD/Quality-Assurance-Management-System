@@ -40,15 +40,15 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('users/edit/(:num)', 'Users::edit/$1');
     $routes->post('users/update/(:num)', 'Users::update/$1');
     $routes->get('users/delete/(:num)', 'Users::delete/$1');
-    $routes->get('users/reset-password/(:num)', 'Users::resetPassword/$1');
+    $routes->post('users/reset-password/(:num)', 'Users::resetPassword/$1');
 
     // Categories
     $routes->get('categories', 'Categories::index');
-    $routes->get('new', 'Categories::new');
-    $routes->post('create', 'Categories::create');
-    $routes->get('edit/(:num)', 'Categories::edit/$1');
-    $routes->post('update/(:num)', 'Categories::update/$1');
-    $routes->post('delete/(:num)', 'Categories::delete/$1');
+    $routes->get('categories/new', 'Categories::new');
+    $routes->post('categories/create', 'Categories::create');
+    $routes->get('categories/edit/(:num)', 'Categories::edit/$1');
+    $routes->post('categories/update/(:num)', 'Categories::update/$1');
+    $routes->post('categories/delete/(:num)', 'Categories::delete/$1');
 });
 
 

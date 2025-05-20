@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">View Submission</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="<?= site_url('admin/documents') ?>" class="btn btn-sm btn-outline-secondary">
+        <a href="<?= base_url('admin/documents') ?>" class="btn btn-sm btn-outline-secondary">
             <i class="bi bi-arrow-left"></i> Back to List
         </a>
     </div>
@@ -68,7 +68,7 @@
                 <div class="mb-3 row">
                     <label class="col-sm-3 col-form-label">Document</label>
                     <div class="col-sm-9">
-                        <a href="<?= site_url("admin/documents/download/{$submission['id']}") ?>" class="btn btn-outline-primary">
+                        <a href="<?= base_url("admin/documents/download/{$submission['id']}") ?>" class="btn btn-outline-primary">
                             <i class="bi bi-download"></i> Download Document
                         </a>
                     </div>
@@ -82,7 +82,7 @@
                 <h5>Review Submission</h5>
             </div>
             <div class="card-body">
-                <form method="post" action="<?= site_url("admin/documents/update-status/{$submission['id']}") ?>">
+                <form method="post" action="<?= base_url("admin/documents/update-status/{$submission['id']}") ?>">
                     <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
                         <select class="form-select" id="status" name="status" required>
@@ -95,7 +95,7 @@
                             <?php endif; ?>
                         </select>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3"> 
                         <label for="remarks" class="form-label">Remarks</label>
                         <textarea class="form-control" id="remarks" name="remarks" rows="3" required></textarea>
                     </div>
@@ -118,7 +118,7 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Remarks History</h5>
-        <a href="<?= site_url("admin/documents/history/{$submission['id']}") ?>" class="btn btn-sm btn-outline-primary">View Full History</a>
+        <a href="<?= base_url("admin/documents/history/{$submission['id']}") ?>" class="btn btn-sm btn-outline-primary">View Full History</a>
     </div>
     <div class="card-body">
         <?php if (!empty($submission['remarks'])): ?>

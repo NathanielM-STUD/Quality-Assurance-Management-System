@@ -35,7 +35,7 @@ class Departments extends BaseController
             'title' => 'Add New Department'
         ];
 
-        return view('admin/departments/form', $data);
+        return view('admin/departments/create', $data);
     }
 
     public function create()
@@ -75,7 +75,7 @@ class Departments extends BaseController
             'representatives' => $representatives
         ];
 
-        return view('admin/departments/form', $data);
+        return view('admin/departments/edit', $data);
     }
 
     public function update($id)

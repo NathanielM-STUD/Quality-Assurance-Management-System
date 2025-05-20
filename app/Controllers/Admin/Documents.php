@@ -90,49 +90,57 @@ class Documents extends BaseController
 
         return view('admin/documents/view', $data);
     }
-
     public function updateStatus($id)
-    {
-        $submission = $this->submissionModel->find($id);
-        
-        if (!$submission) {
-            return redirect()->back()->with('error', 'Submission not found');
-        }
-
-        $newStatus = $this->request->getPost('status');
-        $remarks = $this->request->getPost('remarks');
-
-        // Validate status transition
-        $validTransitions = [
-            'pending' => ['reviewed'],
-            'reviewed' => ['approved', 'rejected'],
-            // Other transitions as needed
-        ];
-
-        if (isset($validTransitions[$submission['status']])) {
-            if (!in_array($newStatus, $validTransitions[$submission['status']])) {
-                return redirect()->back()->with('error', 'Invalid status transition');
-            }
-        }
-
-        // Update status
-        $this->submissionModel->update($id, [
-            'status' => $newStatus,
-            'remarks' => $remarks
-        ]);
-
-        // Log this action
-        $this->historyModel->insert([
-            'submission_id' => $id,
-            'user_id' => session()->get('user_id'),
-            'action' => 'status_change',
-            'old_status' => $submission['status'],
-            'new_status' => $newStatus,
-            'remarks' => $remarks
-        ]);
-
-        return redirect()->to("/admin/documents/view/$id")->with('message', 'Status updated successfully');
+{
+    $userId = session()->get('user_id');
+    if (!$userId) {
+        return redirect()->back()->with('error', 'You must be logged in to perform this action');
     }
+
+    $submission = $this->submissionModel->find($id);
+    
+    if (!$submission) {
+        return redirect()->back()->with('error', 'Submission not found');
+    }
+
+    $newStatus = $this->request->getPost('status');
+    $remarks = $this->request->getPost('remarks');
+
+    $validTransitions = [
+        'pending' => ['reviewed'], 
+        'reviewed' => ['approved', 'rejected'],
+        // Other transitions as needed
+    ];
+
+    if (isset($validTransitions[$submission['status']])) {
+        if (!in_array($newStatus, $validTransitions[$submission['status']])) {
+            return redirect()->back()->with('error', 'Invalid status transition');
+        }
+    }
+
+    // Update status
+    $this->submissionModel->update($id, [
+        'status' => $newStatus,
+        'remarks' => $remarks
+    ]);
+
+    // Log this action
+    $historyData = [
+        'submission_id' => $id,
+        'user_id' => $userId, // Use the validated user_id
+        'action' => 'status_change',
+        'old_status' => $submission['status'],
+        'new_status' => $newStatus,
+        'remarks' => $remarks,
+        'created_at' => date('Y-m-d H:i:s') // Ensure created_at is set
+    ];
+
+    if (!$this->historyModel->insert($historyData)) {
+        log_message('error', 'Failed to insert history record: ' . print_r($this->historyModel->errors(), true));
+    }
+
+    return redirect()->to("/admin/documents/view/$id")->with('message', 'Status updated successfully');
+}
 
     public function history($id)
     {
@@ -152,15 +160,21 @@ class Documents extends BaseController
 
         return view('admin/documents/history', $data);
     }
-
     public function download($id)
-    {
-        $submission = $this->submissionModel->find($id);
-        
-        if (!$submission || !file_exists($submission['file_path'])) {
-            return redirect()->back()->with('error', 'File not found');
-        }
+{
+    $submission = $this->submissionModel->find($id);
 
-        return $this->response->download($submission['file_path'], null);
+    if (!$submission) {
+        return redirect()->back()->with('error', 'Submission not found');
     }
+
+    $file = WRITEPATH . 'uploads/' . $submission['file_path'];
+
+    if (!file_exists($file)) {
+        return redirect()->back()->with('error', 'File not found');
+    }
+
+    return $this->response->download($file, null);
+}
+
 }

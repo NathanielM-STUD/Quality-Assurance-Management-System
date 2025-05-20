@@ -15,7 +15,7 @@
         <h5>Filters</h5>
     </div>
     <div class="card-body">
-        <form method="get" action="<?= site_url('admin/documents') ?>">
+        <form method="get" action="<?= base_url('admin/documents') ?>">
             <div class="row">
                 <div class="col-md-3">
                     <label for="department_id" class="form-label">Department</label>
@@ -61,7 +61,7 @@
             <div class="row mt-3">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary me-2">Apply Filters</button>
-                    <a href="<?= site_url('admin/documents') ?>" class="btn btn-outline-secondary">Reset</a>
+                    <a href="<?= base_url('admin/documents') ?>" class="btn btn-outline-secondary">Reset</a>
                 </div>
             </div>
         </form>
@@ -101,13 +101,13 @@
                     </span>
                 </td>
                 <td>
-                    <a href="<?= site_url("admin/documents/view/{$submission['id']}") ?>" class="btn btn-sm btn-outline-primary" title="View">
+                    <a href="<?= base_url("admin/documents/view/{$submission['id']}") ?>" class="btn btn-sm btn-outline-primary" title="View">
                         <i class="bi bi-eye"></i>
                     </a>
-                    <a href="<?= site_url("admin/documents/download/{$submission['id']}") ?>" class="btn btn-sm btn-outline-success" title="Download">
+                    <a href="<?= base_url("admin/documents/download/{$submission['id']}") ?>" class="btn btn-sm btn-outline-success" title="Download">
                         <i class="bi bi-download"></i>
                     </a>
-                    <a href="<?= site_url("admin/documents/history/{$submission['id']}") ?>" class="btn btn-sm btn-outline-secondary" title="History">
+                    <a href="<?= base_url("admin/documents/history/{$submission['id']}") ?>" class="btn btn-sm btn-outline-secondary" title="History">
                         <i class="bi bi-clock-history"></i>
                     </a>
                 </td>

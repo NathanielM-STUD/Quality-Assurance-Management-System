@@ -8,8 +8,10 @@ class SubmissionHistoryModel extends Model
 {
     protected $table = 'submission_history';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['submission_id', 'user_id', 'action', 'old_status', 'new_status', 'remarks'];
-    protected $useTimestamps = true;
+    protected $allowedFields = ['submission_id', 'user_id', 'action', 'old_status', 'new_status', 'remarks', 'updated_at'];
+    protected $useTimestamps = false;
+
+    protected $updatedField = 'null';
     protected $createdField = 'created_at';
 
     public function getHistoryForSubmission($submissionId)

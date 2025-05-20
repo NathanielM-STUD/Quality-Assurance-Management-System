@@ -27,7 +27,7 @@
                 <td><?= $department['name'] ?></td>
                 <td><?= $department['representatives'] ?? 'None' ?></td>
                 <td>
-                    <a href="<?= site_url("admin/departments/{$department['id']}/edit") ?>" class="btn btn-sm btn-outline-primary" title="Edit">
+                    <a href="<?= site_url("admin/departments/edit/{$department['id']}") ?>" class="btn btn-sm btn-outline-primary" title="Edit">
                         <i class="bi bi-pencil"></i>
                     </a>
                     <form action="<?= site_url("admin/departments/{$department['id']}") ?>" method="post" class="d-inline">

@@ -6,22 +6,22 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class AdminAuth implements FilterInterface
+class Auth implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
         if (!session()->get('isLoggedIn')) {
             return redirect()->to('/login');
         }
-        
-        // Check if user has admin role
-        if (session()->get('role') !== 'admin') {
+
+        // If specific roles are passed, check if user's role is allowed
+        if ($arguments && !in_array(session()->get('role'), $arguments)) {
             return redirect()->to('/')->with('error', 'You do not have permission to access this page');
         }
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // Do something here
+        // No post-filtering needed
     }
 }

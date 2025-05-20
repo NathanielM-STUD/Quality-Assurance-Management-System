@@ -28,11 +28,6 @@
                             <i class="bi bi-tags"></i> Document Categories
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= strpos(current_url(), 'reports') !== false ? 'active' : '' ?>" href="<?= site_url('admin/reports') ?>">
-                            <i class="bi bi-graph-up"></i> Reports & Analytics
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>

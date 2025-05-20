@@ -47,16 +47,6 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5>Submission Status</h5>
-            </div>
-            <div class="card-body">
-                <canvas id="statusChart" height="200"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
                 <h5>Department Compliance</h5>
             </div>
             <div class="card-body">
@@ -81,30 +71,6 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Recent Notifications</h5>
-                <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
-            </div>
-            <div class="card-body p-0">
-                <div class="list-group list-group-flush">
-                    <?php foreach ($notifications as $notification): ?>
-                    <a href="#" class="list-group-item list-group-item-action <?= !$notification['is_read'] ? 'list-group-item-primary' : '' ?>">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1"><?= $notification['title'] ?></h6>
-                            <small><?= time_ago($notification['created_at']) ?></small>
-                        </div>
-                        <p class="mb-1"><?= $notification['message'] ?></p>
-                    </a>
-                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
